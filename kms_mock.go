@@ -3,6 +3,7 @@ package kms
 import (
 	"log"
 	"sync"
+
 	"github.com/pkg/errors"
 )
 
@@ -41,9 +42,9 @@ func (m *MockKMS) Init() error {
 	return nil
 }
 
-// GetSecretValue simulates getting a secret value
-func (m *MockKMS) GetSecretValue(key string) (string, error) {
-	log.Printf("[mock-kms] GetSecretValue called for key=%s", key)
+// GetAwsSecretValue simulates getting a secret value
+func (m *MockKMS) GetAwsSecretValue(key string) (string, error) {
+	log.Printf("[mock-kms] GetAwsSecretValue called for key=%s", key)
 	if !inited {
 		return "", errors.New("[mock-kms] KMS not initialized")
 	}
@@ -66,8 +67,8 @@ func (m *MockKMS) Decrypt(origin string) (string, error) {
 	return "decrypted-mock-value", nil
 }
 
-// GetSecretData returns all currently saved mock secrets
-func (m *MockKMS) GetSecretData() map[string]string {
+// GetAwsSecretData returns all currently saved mock secrets
+func (m *MockKMS) GetAwsSecretData() map[string]string {
 	// Copy or return directly
 	dataCopy := make(map[string]string)
 	for k, v := range secretData {

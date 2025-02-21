@@ -2,5 +2,5 @@ package kms
 
 type KMS interface {
 	Init() error
-	GetSecretValue(key string) (string, error)
+	GetAwsSecretValue(key string) (string, error)
 }
