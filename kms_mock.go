@@ -7,9 +7,6 @@ import (
 	"github.com/pkg/errors"
 )
 
-// MockKMS implements KMS interface
-type MockKMS struct{}
-
 // Global variables, similar to the real library
 var (
 	secretData = make(map[string]string) // Store mock "secret data"
@@ -17,13 +14,8 @@ var (
 	inited     bool                      // Whether initialized
 )
 
-// GetKMS returns MockKMS instance
-func GetKMS() KMS {
-	return &MockKMS{}
-}
-
 // Init simulates initializing KMS client
-func (m *MockKMS) Init() error {
+func Init() error {
 	mu.Lock()
 	defer mu.Unlock()
 
@@ -43,7 +35,7 @@ func (m *MockKMS) Init() error {
 }
 
 // GetAwsSecretValue simulates getting a secret value
-func (m *MockKMS) GetAwsSecretValue(key string) (string, error) {
+func GetAwsSecretValue(key string) (string, error) {
 	log.Printf("[mock-kms] GetAwsSecretValue called for key=%s", key)
 	if !inited {
 		return "", errors.New("[mock-kms] KMS not initialized")
@@ -58,7 +50,7 @@ func (m *MockKMS) GetAwsSecretValue(key string) (string, error) {
 }
 
 // Decrypt simulates decryption
-func (m *MockKMS) Decrypt(origin string) (string, error) {
+func Decrypt(origin string) (string, error) {
 	log.Printf("[mock-kms] Decrypt called with origin=%s", origin)
 	if !inited {
 		return "", errors.New("[mock-kms] KMS not initialized")
@@ -68,7 +60,7 @@ func (m *MockKMS) Decrypt(origin string) (string, error) {
 }
 
 // GetAwsSecretData returns all currently saved mock secrets
-func (m *MockKMS) GetAwsSecretData() map[string]string {
+func GetAwsSecretData() map[string]string {
 	// Copy or return directly
 	dataCopy := make(map[string]string)
 	for k, v := range secretData {
