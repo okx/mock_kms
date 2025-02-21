@@ -1,4 +1,4 @@
-module github.com/xrqin/kms
+module github.com/okx/kms
 
 go 1.23.3
 
