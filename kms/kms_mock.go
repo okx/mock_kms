@@ -6,9 +6,9 @@ func Init() error {
 }
 
 // GetAwsSecretValue simulates getting a secret value
-func GetAwsSecretValue(key string) string {
+func GetAwsSecretValue(key string) (string, error) {
 	// If not found, return a fixed string
-	return key
+	return key, nil
 }
 
 // GetAwsSecretData returns all currently saved mock secrets
